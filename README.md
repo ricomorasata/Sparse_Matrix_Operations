@@ -77,18 +77,20 @@ Its entries are such that: ja[i+1] - ja[i] = number of nonzero entries per colum
 
 
 ## Prerequisites
+The code was run on a Linux environment (Ubuntu 20.04) with the following tools:
 
-- Linux environment
-- gnu-gcc
-- CMake
 - Text editor (Vim, Gedit, Sublime Text, etc.)
+- GCC compiler (version 9.4.0)
+- CMake (version 3.22.2)
+- Valgrind (version 3.15.0)
+- Gnuplot (version 5.2 patchlevel 8)
 
 
 ## Usage
 In order to run the program, follow these steps:
 ### Clone the repository
 ```bash
-git clone https://github.com/0x524D/Sparse_Matrix_Operations.git
+git clone https://github.com/ricomorasata/Sparse_Matrix_Operations.git
 ```
 ### Navigate to the project directory
 ```bash
@@ -113,6 +115,11 @@ make
 ```bash
 ./bin/main
 ```
+
+## References
+[NVPL Storage Formats](https://docs.nvidia.com/nvpl/_static/sparse/storage_format/sparse_matrix.html)
+[Intel&reg; MKL Sparse Matrix Storage Formats](https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2024-1/sparse-matrix-storage-formats.html)
+
 
 ## Copyright Notice
 Copyright (C) 2024, Rico Morasata.

@@ -1,6 +1,5 @@
 
 
- # SPARSE_MATRIX_OPERATIONS
  # This project presents the implementation of basic sparse matrix operations.
  #
  # Copyright (C) 2024, Rico Morasata.
@@ -32,20 +31,19 @@
  # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  
 
+set terminal pngcairo dashed font "Helvetica,10" size 600, 600
+set output 'sparse_matrix_plot.png'
+set title 'sparsity pattern'
 
-cmake_minimum_required(VERSION 3.15)
+set size square
+unset key
 
-set(CMAKE_C_STANDARD 99 CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -O2")
+set xtics scale 0.2
+set ytics nomirror scale 0.2 
+set pm3d map interpolate 0,0
 
-set(EXECUTABLE_OUTPUT_PATH ./bin)
+set xrange [0:n] 
+set yrange [n:0] 
 
-project(main LANGUAGES C)
-
-include_directories(${CMAKE_SOURCE_DIR}/headers)
-
-
-file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/sources/*.c)
-
-add_executable(main ${SOURCES})
-
+splot 'mat_data.dat' using 1:2:3 w p ps .5 lc rgb "blue" pt 7 
 

@@ -1,6 +1,5 @@
 
 /*
- * SPARSE_MATRIX_OPERATIONS
  * This project presents the implementation of basic sparse matrix operations.
  *
  * Copyright (C) 2024, Rico Morasata.
@@ -53,6 +52,7 @@ void allocate_COO_matrix(SparseMatrix *mat) {
 	mat->a = val; 
 }
 
+
 void allocate_CSR_matrix(SparseMatrix *mat) {
 
 	int *row_ptr = calloc((mat->nr + 1) , INT_SIZE);
@@ -83,6 +83,7 @@ void allocate_CSC_matrix(SparseMatrix *mat) {
 	IS_POINTER_VALID(val);
 	mat->a = val; 
 }
+
 
 void count_nonzeros_per_row_CSR(SparseMatrix *CSR, int *nnz_per_row) {
 
@@ -267,7 +268,7 @@ void convert_CSC_to_CSR(SparseMatrix *CSC, SparseMatrix *CSR) {
 
 }
 
-void 	transpose_CSR(const SparseMatrix *CSR, SparseMatrix *transpose) {
+void transpose_CSR(const SparseMatrix *CSR, SparseMatrix *transpose) {
 
 	transpose->nr 	= CSR->nr;
 	transpose->nnz 	= CSR->nnz;
@@ -343,7 +344,7 @@ int is_symmetric(SparseMatrix *CSR) {
 void extract_upper_triangular(SparseMatrix *CSR, SparseMatrix *upper) {
 
 	upper->nr 	= CSR->nr;
-	upper->nnz 	= (CSR->nnz - CSR->nr)/2 + CSR->nr;
+	upper->nnz 	= (CSR->nnz - CSR->nr) / 2 + CSR->nr;
 
 	allocate_CSR_matrix(upper); 
 	
@@ -372,7 +373,7 @@ void extract_upper_triangular(SparseMatrix *CSR, SparseMatrix *upper) {
 void extract_lower_triangular(SparseMatrix *CSR, SparseMatrix *lower) {
 
 	lower->nr 	= CSR->nr;
-	lower->nnz 	= (CSR->nnz - CSR->nr)/2 + CSR->nr;
+	lower->nnz 	= (CSR->nnz - CSR->nr) / 2 + CSR->nr;
 
 	allocate_CSR_matrix(lower); 
 	
@@ -423,11 +424,38 @@ void print_CSC_matrix(SparseMatrix *CSC) {
 	}
 }
 
+/**
+ * This .dat file is required by the Gnuplot script in order to visualize the matrix' 
+ * sparsity pattern. The file will be found in build/ directory.*/
+void write_CSR_matrix_to_file(SparseMatrix *mat) {
+
+	FILE *mat_data = fopen("mat_data.dat", "w");
+	IS_POINTER_VALID(mat_data);
+
+	for (int i = 0; i < mat->nr; i++) {
+		for (int j = mat->ia[i]; j < mat->ia[i + 1]; j++) {
+			fprintf(mat_data, "%d \t %d \t %f\n", i, mat->ja[j], mat->a[j]);
+		}
+	}
+
+	fclose(mat_data);
+}
+
 
 /**
- * This function converts a sparse matrix in COO format into CSR format.
- * The matrix in COO format is assumed to be sorted and stored in row-major order.
- * */
+ * Plots the sparsity pattern of a sparse matrix stored in CSR format as a .png image,
+ * which will be saved in build/ directory.
+ * This function executes a Gnuplot script by invoking the system() library function.*/
+void plot_sparsity_pattern(SparseMatrix *mat) {
+
+	write_CSR_matrix_to_file(mat);
+	char command[256];
+	int n = mat->nr;
+	snprintf(command, sizeof(command), "gnuplot -e \"n=%d\" ../plot_sparse.p", n);
+    system(command);
+    printf("Plot saved as 'sparse_matrix_plot.png'\n");
+}
+
 
 void deallocate_sparse_matrix(SparseMatrix *mat) {
 	

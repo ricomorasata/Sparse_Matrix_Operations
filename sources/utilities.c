@@ -1,6 +1,5 @@
 
 /*
- * SPARSE_MATRIX_OPERATIONS
  * This project presents the implementation of basic sparse matrix operations.
  *
  * Copyright (C) 2024, Rico Morasata.

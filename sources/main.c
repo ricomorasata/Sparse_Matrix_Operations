@@ -1,6 +1,5 @@
 
 /*
- * SPARSE_MATRIX_OPERATIONS
  * This project presents the implementation of basic sparse matrix operations.
  *
  * Copyright (C) 2024, Rico Morasata.
@@ -65,6 +64,8 @@ int main(int argc, char const *argv[]) {
 		printf("%d\n", nzr[i]);
 	}
 	
+	plot_sparsity_pattern(&CSR);
+	
 	printf("\n");
 
 	SparseMatrix CSC;
@@ -78,7 +79,7 @@ int main(int argc, char const *argv[]) {
 	printf("\n");
 
 	int sym_check = is_symmetric(&CSR1);
-	printf("Is the sparse matrix symmetric? %d\n", sym_check);
+	printf("Is the sparse matrix numerically symmetric? %d\n", sym_check);
 
 	if (sym_check) {
 		SparseMatrix LOWER;

@@ -1,6 +1,5 @@
 
 /*
- * SPARSE_MATRIX_OPERATIONS
  * This project presents the implementation of basic sparse matrix operations.
  *
  * Copyright (C) 2024, Rico Morasata.
@@ -87,7 +86,7 @@ void 	transpose_CSR(const SparseMatrix *CSR, SparseMatrix *transpose);
 
 
 /**
- * @return 	1 if the sparse matrix in CSR format is symmetric, and 0 otherwise.
+ * @return 	1 if the sparse matrix in CSR format is numerically symmetric, and 0 otherwise.
  * */
 int 	is_symmetric(SparseMatrix *CSR);
 
@@ -98,6 +97,8 @@ void 	extract_lower_triangular(SparseMatrix *CSR, SparseMatrix *lower);
 void 	print_CSR_matrix(SparseMatrix *CSR);
 
 void 	print_CSC_matrix(SparseMatrix *CSR);
+
+void 	write_CSR_matrix_to_file(SparseMatrix *mat);
 
 void 	plot_sparsity_pattern(SparseMatrix *mat);
 
